@@ -18,30 +18,26 @@ SCREENSHOT OF SOLUTION
 
 ![kubernetes](https://img.shields.io/badge/kubernetes-326ce5.svg?&style=for-the-badge&logo=kubernetes&logoColor=white) ![elasticsearch](https://img.shields.io/badge/ElasticSearch-0779A1?style=for-the-badge&logo=elasticsearch&logoColor=white) ![kibana](https://img.shields.io/badge/Kibana-EF5098?style=for-the-badge&logo=Kibana&logoColor=white) ![aws](https://img.shields.io/badge/AWS-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white) ![markdown](https://img.shields.io/badge/Markdown-000000?style=for-the-badge&logo=markdown&logoColor=white)
 
-[Features](#-features) | [Solution Architecture](#-solution-architecture) | [Getting Started](#-getting-started) | [Configuration](#-configuration) | [Maintenance Steps](#-maintenance-steps) | [Author](#-author) | [Credits](#-credits)
+[Features](#-features) | [Solution Architecture](#-solution-architecture) | [Getting Started](#-getting-started) | [Configuration](#-configuration) | [Maintenance Steps](#-maintenance-steps) | [Author](#-author) | [Credits](#-credits) | [Failures](#-failures)
 
 </div>
 
 ## 🎯 Features
 
-- The ES cluster must be deployed in a K8s (Kubernetes) cluster.
-- The team already owns a K8s cluster, so provisioning a K8s cluster is not
-  a part of the requested solution.
-- The ES cluster can be deployed using any tool to manage K8s workloads: vanilla
-  manifests, CRDs, Helm charts, kustomize, etc.
-- The ES cluster’s configuration must ensure availability of the ES cluster
-  during failures in the underlying hardware and regular maintenance operations
-  in the K8s cluster.
-- The ES roles assigned to each of the ES nodes must be identical for all nodes
-  in the ES cluster.
-- The solution is shared with the team via either a zip-file or a Git(Hub)
-  repository containing everything to deploy an ES cluster.
-- The solution contains a README, explaining:
-  - How the solution should be used to deploy the ES cluster.
-  - What design decisions have been made in this solution (cluster
-    configuration, used tools, etc.).
-- The solution is functional and results in a running ES cluster if the README
-  instructions are followed.
+• **Elasticsearch cluster in Kubernetes cluster:** At this project elasticsearch cluster is in the kubernetes cluster to ... It is only needed a kubeconfig file to use the remaining k8s cluster.
+
+• **Deployed via Helm:** Helm is used to deploy the kubernetes cluster. It could be deployed using ... and ... but helm has advantage to ...
+
+• **Highly available:** The elasticsearch cluster has high availability due to ...
+
+• **Same roles:** The roles assigned to each of the elasticsearch nodes are all identical.
+
+• **Downloadable:** The solution can be downloaded by cloning the project or downloading the zip file under Releases
+
+• **Well documented:** All phases of the solution are documented and this README-driven project...
+
+• **Easy appliable:** When all of the steps are completed successfully, one may own an elasticsearch cluster...
+
 
 ## 📐 Solution Architecture
 
@@ -60,3 +56,6 @@ Mustafa Can Sevinç
 ## 📚 Credits/Resources
 
 * https://tom.preston-werner.com/2010/08/23/readme-driven-development.html
+* https://github.com/alexandresanlim/Badges4-README.md-Profile
+
+## 🍐 Failures
