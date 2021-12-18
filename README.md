@@ -1,18 +1,38 @@
 # highly-available-elasticsearch
 
-LOGO
+<div align="center">
 
----
+[![logo](logo.png)](highly-available-elasticsearch)
 
-[![Releases](https://img.shields.io/github/v/release/mustafacansevinc/highly-available-elasticsearch?style=for-the-badge)](https://github.com/mustafacansevinc/highly-available-elasticsearch/releases)
-[![Licence](https://img.shields.io/github/license/mustafacansevinc/highly-available-elasticsearch?style=for-the-badge)](./LICENSE)
-[![Total lines](https://img.shields.io/tokei/lines/github/mustafacansevinc/highly-available-elasticsearch?style=for-the-badge)](https://github.com/mustafacansevinc/highly-available-elasticsearch/)
+[![Releases](https://img.shields.io/github/v/release/mustafacansevinc/highly-available-elasticsearch?style=for-the-badge)](https://github.com/mustafacansevinc/highly-available-elasticsearch/releases) [![Licence](https://img.shields.io/github/license/mustafacansevinc/highly-available-elasticsearch?style=for-the-badge)](./LICENSE) [![Total lines](https://img.shields.io/tokei/lines/github/mustafacansevinc/highly-available-elasticsearch?style=for-the-badge)](https://github.com/mustafacansevinc/highly-available-elasticsearch/)
 
 badgeMadeWith badgeBestPractices?
 
+</div>
+
+---
+
+<div align="center">
+
 ![kubernetes](https://img.shields.io/badge/kubernetes-326ce5.svg?&style=for-the-badge&logo=kubernetes&logoColor=white) ![elasticsearch](https://img.shields.io/badge/ElasticSearch-0779A1?style=for-the-badge&logo=elasticsearch&logoColor=white) ![kibana](https://img.shields.io/badge/Kibana-EF5098?style=for-the-badge&logo=Kibana&logoColor=white) ![aws](https://img.shields.io/badge/AWS-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white) ![markdown](https://img.shields.io/badge/Markdown-000000?style=for-the-badge&logo=markdown&logoColor=white)
 
-Table of Contents
+</div>
+
+**Table of Contents**
+
+• [Features](#features)
+
+• [Solution Architecture](#solution-architecture)
+
+• [Getting Started](#getting-started)
+
+• [Examples](#examples)
+
+• [Configuration](#configuration)
+
+• [Author](#author)
+
+• [Credits](#credits)
 
 ## Features
 
@@ -35,9 +55,11 @@ Table of Contents
 - The solution is functional and results in a running ES cluster if the README
   instructions are followed.
 
-## Solution
+## Solution Architecture
 
-## Usage
+## Getting Started
+
+## Examples
 
 ## Configuration
 
@@ -47,6 +69,6 @@ Mustafa Can Sevinç
 
 [![github](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/mustafacansevinc) [![linkedin](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/mcansevinc/) [![gmail](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:mcansevinc@gmail.com) [![cansevinc](https://img.shields.io/badge/website-667881?style=for-the-badge&logo=About.me&logoColor=white)](http://cansevinc.com.tr/)
 
-## Inspiration
+## Credits
 
 * https://tom.preston-werner.com/2010/08/23/readme-driven-development.html
