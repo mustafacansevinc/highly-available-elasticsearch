@@ -1,0 +1,94 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: elastic-ha
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: aws-ebs
+  namespace: elastic-ha
+parameters:
+  fsType: ext4
+  type: gp2
+provisioner: kubernetes.io/aws-ebs
+volumeBindingMode: WaitForFirstConsumer
+---
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  name: ha-es
+  namespace: elastic-ha
+spec:
+  http:
+    service:
+      spec:
+        type: LoadBalancer
+  nodeSets:
+  - config:
+      node.roles:
+      - master
+      - data
+      xpack.ml.enabled: false
+    count: 3
+    name: default
+    podTemplate:
+      metadata:
+        labels:
+          app: elasticsearch
+      spec:
+        containers:
+        - name: elasticsearch
+          resources:
+            limits:
+              cpu: 4
+              memory: 12Gi
+            requests:
+              cpu: 1
+              memory: 12Gi
+        initContainers:
+        - command:
+          - sh
+          - -c
+          - sysctl -w vm.max_map_count=262144
+          name: sysctl
+          securityContext:
+            privileged: true
+    volumeClaimTemplates:
+    - metadata:
+        name: elasticsearch-data
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 10Gi
+        storageClassName: aws-ebs
+  updateStrategy:
+    changeBudget:
+      maxSurge: -1
+      maxUnavailable: 1
+  version: 7.16.1
+---
+apiVersion: kibana.k8s.elastic.co/v1
+kind: Kibana
+metadata:
+  name: ha-es-kibana
+  namespace: elastic-ha
+spec:
+  count: 1
+  elasticsearchRef:
+    name: ha-es
+  http:
+    service:
+      spec:
+        type: LoadBalancer
+  podTemplate:
+    spec:
+      containers:
+      - name: kibana
+        resources:
+          limits:
+            cpu: 1
+            memory: 1Gi
+  version: 7.16.1
