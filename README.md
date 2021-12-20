@@ -14,11 +14,11 @@
 
 Highly Available Elasticsearch solution is designed to help out the team to execute (near) real-time queries and visualize the free form reviews that the customers fill out after each delivery.
 
-The [Solution Architecture](#-solution-architecture) section contains **detailed** information about the configured and unconfigured values, and describes the background of them. So it is **not necessary to read** that section to deploy the *Highly Available Elasticsearch* solution.
+The [Solution Architecture](#-solution-architecture) section contains **detailed** information about the configured and unconfigured values and describes their background. So it is **not necessary to read** that section to deploy the *Highly Available Elasticsearch* solution.
 
-You can check out [The Solution](#-the-solution) section to flick through the configuration values and the reasons of the configuration or just jump to the [Quick Start](#-quick-start) section to deploy the solution.
+You can check out [The Solution](#-the-solution) section to flick through the configuration values and the reasons for the configuration or just jump to the [Quick Start](#-quick-start) section to deploy the solution.
 
-I can say that I have spent more than 25 hours to write this document including researches, 2 hours for trying the solution, and a couple of hours to think about the ways to increase the resilience. Also I have spent some time at my [failures](#-failures) too.
+I can say that I have spent more than 25 hours writing this document including researches, 2 hours for trying the solution, and a couple of hours thinking about the ways to increase the resilience. Also, I have spent some time on my [failures](#-failures) too.
 
 
 ## 🎯 Features
@@ -27,11 +27,11 @@ I can say that I have spent more than 25 hours to write this document including 
 
 • **Highly available:** The elasticsearch cluster is configured carefully to ensure it has high availability and the cluster is resilient to single-node failures. Also created automated snapshots to ensure the data may be restored.
 
-• **Same roles:** The roles assigned to each of the elasticsearch nodes are all identical as the cluster is deployed with a single NodeSet definiton with a count of 3.
+• **Same roles:** The roles assigned to each of the elasticsearch nodes are all identical as the cluster is deployed with a single NodeSet definition with a count of 3.
 
 • **Downloadable:** The solution can be downloaded by cloning the project or downloading the zip file under [releases](https://github.com/mustafacansevinc/highly-available-elasticsearch/releases).
 
-• **Well documented:** Whole architecture and details of the solution are documented in this README-driven project. This documentation which simplifies the complicated things, surely helps understanding Elasticsearch, and by that, it helps designing a resilient cluster.
+• **Well documented:** Whole architecture and details of the solution are documented in this README-driven project. This documentation which simplifies the complicated things surely helps understanding Elasticsearch, and by that, it helps to design a resilient cluster.
 
 • **Deployed via Kustomize:** Kustomize is used to manage kubernetes workloads and to generate an output file which will be used to deploy highly available elasticsearch on the kubernetes cluster.
 
@@ -40,15 +40,15 @@ I can say that I have spent more than 25 hours to write this document including 
 
 ## 📐 Solution Architecture
 
-Elasticsearch is a distributed, search and analytics engine which gives the near real-time search experience and analysis of data.
+Elasticsearch is a distributed, search and analytics engine that gives the near real-time search experience and analysis of data.
 
-It is fast, distributed and capable of handling the volume and fre-form nature of data, scalabe and resilient.
+It is fast, distributed, and capable of handling the volume and free-form nature of data, scalable and resilient.
 
-An elasticsearch cluster can be spawn quickly to use on AWS, but the optimization of the cluster will be cruical to improve the speed and sustainability. There are gigabytes of data coming in all the time and the data has to be easily accessible and the cluster has to be resilient. Elasticsearch works even with an unoptimized configuration, but as there are more data, there will be more errors to encounter.
+An elasticsearch cluster can be spawn quickly to use on AWS, but the optimization of the cluster will be crucial to improve the speed and sustainability. There are gigabytes of data coming in all the time and the data has to be easily accessible and the cluster has to be resilient. Elasticsearch works even with an unoptimized configuration, but as there are more data, there will be more errors to encounter.
 
-It is not that easy to run an elasticsearch cluster in **production**. It is always better to take time while building your cluster. You need to understand what your requirements are and what you want before building your cluster. And keep tuning the configuration as you encounter errors, until the cluster will become stable.
+It is not that easy to run an elasticsearch cluster in **production**. It is always better to take time while building your cluster. You need to understand what your requirements are and what you want before building your cluster. And keep tuning the configuration as you encounter errors until the cluster will become stable.
 
-This solution will be focused on the resilience of the elasticsearch cluster and the design.
+This solution will focus on the resilience of the elasticsearch cluster and the design.
 
 ### 💪 Resilience
 
@@ -60,26 +60,26 @@ Sometimes the cluster may experience hardware failure or a power loss. The clust
 * The cluster has at least **three *master-eligible* nodes**, as long as at least two of these nodes are not voting-only *master-eligible* nodes.
 * Clients are configured to send their requests to a **load balancer** that balances the requests across an appropriate set of nodes.
 
-Some features are offered by Elasticsearch to keep the cluster highly available. 
+Elasticsearch offers some features to keep the cluster highly available.
 
-* [Cross Cluster Replication](https://www.elastic.co/guide/en/elasticsearch/reference/current/xpack-ccr.html): It lets you replicate index and the data across remote follower clusters which may be in a different datazone from the leader cluster so that search request can be still handled during the datacenter outage:
-    * In uni-directional configuration, there is one cluster to contain only leader indices and the other cluster to contain only follower indices. It can be applied the architectures:
+* [Cross Cluster Replication](https://www.elastic.co/guide/en/elasticsearch/reference/current/xpack-ccr.html): It lets you replicate the index and the data across remote follower clusters which may be in a different data zone from the leader cluster so that search requests can be still handled during the datacenter outage:
+    * In the uni-directional configuration, there is one cluster to contain only leader indices and the other cluster to contain only follower indices. It can be applied the architectures:
         * Single disaster recovery datacenter
-        * Multiple disaster recovery datacenter
+        * Multiple disaster recovery datacenters
         * Chained replication
-    * In bi-directional configuration, each cluster contains both leader and follower indices.
+    * In the bi-directional configuration, each cluster contains both leader and follower indices.
         * Bi-directional replication
     * Please note that CCR is not covered in this solution as high availability should be provided using only one cluster.
 
-* [**Taking regular snapshots**](https://www.elastic.co/guide/en/elasticsearch/reference/current/snapshots-take-snapshot.html): So that you can restore a fresh copy of your data.
+* [**Take regular snapshots**](https://www.elastic.co/guide/en/elasticsearch/reference/current/snapshots-take-snapshot.html): So that you can restore a fresh copy of your data.
     * The snapshot creation and retention process could be automated using [Snapshot Lifecycle Management](https://www.elastic.co/guide/en/elasticsearch/reference/current/snapshot-lifecycle-management-api.html) (SLM).
     * If multiple SLM policies are defined to create snapshots at different time intervals, it lets you restore data from a wider range.
-    * The snapshots can be stored in file system location or in custom repositories like S3, Azure & Google Cloud Storage. See [this link](https://www.elastic.co/guide/en/cloud/current/ec-custom-repository.html) for details.
+    * The snapshots can be stored in file system locations or in custom repositories like S3, Azure & Google Cloud Storage. See [this link](https://www.elastic.co/guide/en/cloud/current/ec-custom-repository.html) for details.
     * Periodic snapshots can be taken with also a [CronJob](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/)
 
 * [**Design for resilience**](https://www.elastic.co/guide/en/elasticsearch/reference/current/high-availability-cluster-design.html): The main step of high availability is the design for resilience as an Elasticsearch cluster can continue operations as normal if some of its nodes or components are unavailable when there are enough well-connected nodes with a proper design.
     * One node clusters: A single node cluster *cannot be resilient* as there are no replicas. It is needed to override the `number_of_replicas` value as 0 to ensure the cluster can report a `green` status. A snapshot may be restored if the node fails. One-node clusters are not recommended to use in production.
-    * Two-node clusters: A two-node cluster *cannot be resilient*. The master elections are majority-based, so one of the nodes should be configured as `node.master: false` to ensure it is *master-ineligible*, as if the both of the nodes were *master-eligible* the master election will fail. With this type of design, the cluster may tolerate the loss of the *master-ineligible* node. Also, a resilient load balancer should be configured to balance client requests across the nodes.
+    * Two-node clusters: A two-node cluster *cannot be resilient*. The master elections are majority-based, so one of the nodes should be configured as `node.master: false` to ensure it is *master-ineligible* as if both of the nodes were *master-eligible* the master election will fail. With this type of design, the cluster may tolerate the loss of the *master-ineligible* node. Also, a resilient load balancer should be configured to balance client requests across the nodes.
     * **Three-node clusters**: All three nodes can have the same roles in this scenario and as they all are *master-eligible*, the cluster will be resilient to the loss of any single node. Also, a resilient load balancer should be configured to balance client requests across the nodes.
     * Clusters with more than three nodes: It is good practice to limit the number of *master-eligible* nodes to three, which will shorten the time of master elections. But as the cluster is larger, it is recommended to use dedicated nodes for each role to scale resources for each task independently. Also, you should avoid sending any client requests to the dedicated *master-eligible* nodes to overwhelm them with unnecessary extra work that could be handled by one of the other nodes.
     * Multizone clusters: [Resilience in larger clusters](https://www.elastic.co/guide/en/elasticsearch/reference/current/high-availability-cluster-design-large-clusters.html)
@@ -89,10 +89,10 @@ Some features are offered by Elasticsearch to keep the cluster highly available.
 The most-used node roles are:
 
 * **`master`**: Every cluster requires this role.
-* **`data`** **or** `data_content` & `data_hot`: Is required by every cluster.
+* **`data`** **or** `data_content` & `data_hot`: This is required by every cluster.
 * `ingest`: Required if stack monitoring & ingest pipelines are used.
 * `remote_cluster_client`: Required if cross-cluster search/replication is used.
-* `transform`: Required if if fleet, elastic security or transforms used.
+* `transform`: Required if fleet, elastic security or transforms used.
 * `ml`: Required if using machine learning features, such as anomaly detection. `xpack.ml.enabled` may be set as `false` to disable the machine learning API on the node.
 
 ### 💎 Sharding
@@ -107,23 +107,23 @@ Once the shard has been delegated to a specific node, each write is sent to the 
 
 This method allows a reasonably smooth distribution of documents across all of your shards. This will distribute your documents pretty well across all of your shards so you can quickly query lots of documents.
 
-Searches run on a single thread per shard, so searches across lots of shards will cause slow search speeds as different shards has to be queried to collect the information.
+Searches run on a single thread per shard, so searches across lots of shards will cause slow search speeds as different shards have to be queried to collect the information.
 
-Also, each index and shard requires some memory and CPU resources. Usually a small set of large shards uses fewer resources than many small shards.
+Also, each index and shard requires some memory and CPU resources. Usually, a small set of large shards uses fewer resources than many small shards.
 
-Elasticsearch will balance shards automatically. When a node has been added or a node has fails, Elasticsearch rebalances the index's shards across the remaining nodes. The time to rebalance the cluster increases as the shard size increases.
+Elasticsearch will balance shards automatically. When a node has been added or a node has failed, Elasticsearch rebalances the index's shards across the remaining nodes. The time to rebalance the cluster increases as the shard size increases.
 
-Also [replication of the shards](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-replication.html) to other nodes ensures that you always have the data even if you lose some nodes.
+Also, [replication of the shards](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-replication.html) to other nodes ensures that you always have the data even if you lose some nodes.
 
 So, the optimal shard size or count will be between these extreme values, usually. And the best way is to run benchmarks using near-real data and queries.
 
-On the older versions of Elasticsearch it was recommended to calculate the number and size of shards.
+On the older versions of Elasticsearch, it was recommended to calculate the number and size of shards.
 
 But now, with the newer versions, the best way to prevent oversharding and other shard-related issues is to create a sharding strategy to help you determine and maintain the optimal number of shards for your cluster while limiting the size of those shards.
 
-And as there isn't any strategy which fits every cluster, a good sharding strategy must account for your infrastructure, use case, and performance expectations. [Quantitative cluster sizing webinar](https://www.elastic.co/elasticon/conf/2016/sf/quantitative-cluster-sizing) explains the recommended methodology to create a sharding strategy.
+And as there isn't any strategy that fits every cluster, a good sharding strategy must account for your infrastructure, use case, and performance expectations. [Quantitative cluster sizing webinar](https://www.elastic.co/elasticon/conf/2016/sf/quantitative-cluster-sizing) explains the recommended methodology to create a sharding strategy.
 
-When building the sharding strategy, consider what explained detailly previously.
+When building the sharding strategy, consider what was explained detailly previously.
 
 Kibana has the required tools to [monitor elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/7.16/monitor-elasticsearch-cluster.html), which should be used as different shard configurations are tested.
 
@@ -136,10 +136,10 @@ Kibana has the required tools to [monitor elasticsearch](https://www.elastic.co/
 </div>
 
 Don't forget to:
-* Aim for shard sizes between 10GB and 50 GB: This is not a hard limit but it is the best size for logs and time series data. If [Index Lifecycle Management](https://www.elastic.co/guide/en/elasticsearch/reference/current/index-lifecycle-management.html) (ILM) is used, [set `max_primary_shard_size` threshold](https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-rollover.html#ilm-rollover-primar-shardsize-ex) to `50gb` to avoid shards larger than 50GB.
-* Aim for 20 shards or fewer per GB of heap memory. Check the [number of shards per node](https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-shards.html) and check [current size of each node's heap](https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-shards.html), if you find they exceed more than 20 shards per GB, add another node.
+* Aim for shard sizes between 10GB and 50 GB: This is not a hard limit but it is the best size for logs and time-series data. If [Index Lifecycle Management](https://www.elastic.co/guide/en/elasticsearch/reference/current/index-lifecycle-management.html) (ILM) is used, [set `max_primary_shard_size` threshold](https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-rollover.html#ilm-rollover-primar-shardsize-ex) to `50gb` to avoid shards larger than 50GB.
+* Aim for 20 shards or fewer per GB of heap memory. Check the [number of shards per node](https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-shards.html) and check [the current size of each node's heap](https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-shards.html), if you find they exceed more than 20 shards per GB, add another node.
 * Prevent node hotspots, by updating [`index.routing.allocation.total_shards_per_node`](https://www.elastic.co/guide/en/elasticsearch/reference/current/allocation-total-shards.html#total-shards-per-node) setting.
-* Avoid unnecessary mapped fields, by using [explicit mapping](https://www.elastic.co/guide/en/elasticsearch/reference/current/explicit-mapping.html) instead of [dynamic mapping](https://www.elastic.co/guide/en/elasticsearch/reference/current/dynamic-field-mapping.html) to avoid creating fields which consumes disk and memory but are never used.
+* Avoid unnecessary mapped fields, by using [explicit mapping](https://www.elastic.co/guide/en/elasticsearch/reference/current/explicit-mapping.html) instead of [dynamic mapping](https://www.elastic.co/guide/en/elasticsearch/reference/current/dynamic-field-mapping.html) to avoid creating fields that consume disk and memory but are never used.
 
 ### 💾 Storage
 
@@ -147,32 +147,32 @@ The storage mechanism for Elasticsearch data has to be configured to work on Kub
 
 There are two types of PersistentVolumes which are both handled the same way, but their performance differs:
 
-* **Network-attached PersistentVolumes** which provides a huge **benefit**. When the host goes down, or needs to be replaced, the Pod can simply be deleted. Kubernetes reschedules it automatically on a different host and reattaches the same volume, very quick and without any human intervention.
-* **Local PersistentVolumes** which provides a huge **overhead**. When the host goes down, or needs to be replaced, the Pod cannot be scheduled on a different host. Once a Local PersistentVolume is bound to it, the Pod can only be scheduled on the same host. It remains in `Pending` state until the host is available, or until the PersistentVolumeClaim is manually deleted. So Local PersistentVolumes come with some operational overhead.
+* **Network-attached PersistentVolumes** which provides a huge **benefit**. When the host goes down or needs to be replaced, the Pod can simply be deleted. Kubernetes reschedules it automatically on a different host and reattaches the same volume, very quickly and without any human intervention.
+* **Local PersistentVolumes** which provides a huge **overhead**. When the host goes down or needs to be replaced, the Pod cannot be scheduled on a different host. Once a Local PersistentVolume is bound to it, the Pod can only be scheduled on the same host. It remains in a `Pending` state until the host is available, or until the PersistentVolumeClaim is manually deleted. So Local PersistentVolumes come with some operational overhead.
 
 **Operations of Local PersistentVolumes**
 
-* **Host Maintenance:** When a host is out of the Kubernetes cluster temporarily, it is common to cordon, then drain it. Depending on the [PodDisruptionBudget](https://www.elastic.co/guide/en/cloud-on-k8s/1.9/k8s-pod-disruption-budget.html), the pods on that host will be deleted automatically. The pod will stay on `Pending` state and cannot be scheduled again on the cordoned host till the host gets online. The next pod will be deleted automatically as soon as the Elasticsearch cluster health becomes green again.
-* **Host Removal** If a host has a failure or is permanently removed, its local data is likely lost. The pod will stay `Pending` and it cannot attach the PersistenVolume any more. The schedule the pod on a different host, **with an empty volume**, you have to manually remove both the PersistentVolumeClaim and the Pod. Then a new pod will be created with a new PersistentVolumeClaim which is then matched with a PersistentVolume. Finally, Elasticsearch [shard replication](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-replication.html) makes sure that data is recovered on the new instance.
+* **Host Maintenance:** When a host is out of the Kubernetes cluster temporarily, it is common to the cordon, then drain it. Depending on the [PodDisruptionBudget](https://www.elastic.co/guide/en/cloud-on-k8s/1.9/k8s-pod-disruption-budget.html), the pods on that host will be deleted automatically. The pod will stay on `Pending` state and cannot be scheduled again on the cordoned host till the host gets online. The next pod will be deleted automatically as soon as the Elasticsearch cluster health becomes green again.
+* **Host Removal** If a host has a failure or is permanently removed, its local data is likely lost. The pod will stay `Pending` and it cannot attach the PersistentVolume anymore. The schedule the pod on a different host, **with an empty volume**, you have to manually remove both the PersistentVolumeClaim and the Pod. Then a new pod will be created with a new PersistentVolumeClaim which is then matched with a PersistentVolume. Finally, Elasticsearch [shard replication](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-replication.html) makes sure that data is recovered on the new instance.
 
-**volumeBindingMode: WaitForFirstConsumeredit** is set to let the pod which scheduled on a host access the existing PersistenVolume.
+**volumeBindingMode: WaitForFirstConsumeredit** is set to let the pod which is scheduled on a host access the existing PersistentVolume.
 
-**Reclaim Policy:** PersistentVolumeClaims are deleted automatically by ECK when they are not needed any more. As the PersistentVolume with existing data cannot be reused, **it is recommended to `Delete`**, as default, instead of `Retain`
+**Reclaim Policy:** PersistentVolumeClaims are deleted automatically by ECK when they are not needed anymore. As the PersistentVolume with existing data cannot be reused, **it is recommended to `Delete`**, as default, instead of `Retain`.
 
 ### 🧮 Memory & JVM Heap Size
 
-On the [**older versions** of Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/6.8/heap-size.html) it was a must to override the JVM options as Elasticsearch was shipped with a default heap size of 1 GB.
+On the [**older versions** of Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/6.8/heap-size.html), it was a must to override the JVM options as Elasticsearch was shipped with a default heap size of 1 GB.
 
 But with the newer versions, **it is not recommended to modify advanced settings** as it will negatively impact performance and stability. By default, **Elasticsearch automatically sets the JVM heap size** based on the node's roles and total memory.
 
 The heap size still can be overridden, by the [following rules](https://www.elastic.co/guide/en/elasticsearch/reference/7.16/advanced-configuration.html#set-jvm-heap-size):
 
-* `Xms` and `Xmx` should be set to no more than 50% of the total available RAM. Where the total memory is defined as the amount of memory visible to the container, if Elasticsearch is running in a container. Not the total system memory on the host.
-* Also ideally, they should be less than 26GB because that is the point at which object pointers are not zero based anymore and it will drop the performance.
+* `Xms` and `Xmx` should be set to no more than 50% of the total available RAM. Where the total memory is defined as the amount of memory visible to the container if Elasticsearch is running in a container. Not the total system memory on the host.
+* Also ideally, they should be less than 26GB because that is the point at which object pointers are not zero-based anymore and it will drop the performance.
 
 The heap size can be configured by defining the `ES_JAVA_OPTS` variable as `-Xms8g -Xmx8g`
 
-**Note:** When running Elasticsearch on ECK, by default, ECK applies a memory resource limit of 2 GiB to the container. Its recommended to configure the resources in the manifest file.
+**Note:** When running Elasticsearch on ECK, by default, ECK applies a memory resource limit of 2 GiB to the container. It's recommended to configure the resources in the manifest file.
 
 ### 🥽 Virtual Memory
 
@@ -183,7 +183,7 @@ Elasticsearch uses memory mapping (mmap) by default. The default values for virt
 There are [two options](https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-bundles-plugins.html) to run Elasticsearch with custom configuration files and specific plugins installed. They are:
 
 1. Create custom Image: Requires a container registry
-2. Use init containers: Each node needs to download seperatly wasting bandwith
+2. Use init containers: Each node needs to download separately wasting bandwidth
 
 ### 📈 Benchmark
 
@@ -195,7 +195,7 @@ There are [two options](https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s
 The elasticsearch cluster is configured to ensure high availability and resilience to the loss of any single node.
 
 * ECK will be deployed using vanilla manifest files.
-* The Elasticsearch cluster and Kibana will be deployed using **kustomize**-generated file.
+* The Elasticsearch cluster and Kibana will be deployed using the **kustomize**-generated file.
 * The desired configuration will be applied by initContainers because building a registry is not a part of this solution.
 
 <div align="center">
@@ -206,17 +206,17 @@ The elasticsearch cluster is configured to ensure high availability and resilien
 
 </div>
 
-* The design will be three nodes which have the same roles which are **master & data** because we don't need other roles. If an [Ingest Pipeline](https://www.elastic.co/guide/en/elasticsearch/reference/current/ingest.html) will be created, `ingest` role may be given to all nodes, too.
+* The design will be three nodes thay have the same roles which are **master & data** because we don't need other roles. If an [Ingest Pipeline](https://www.elastic.co/guide/en/elasticsearch/reference/current/ingest.html) will be created, `ingest` role may be given to all nodes, too.
 * A **load balancer** will be configured to balance client requests across the nodes.
 * Total shards per node **won't be hard-limited** as it can result in some shards not being allocated.
-* This solution will go with **dynamic mapping** option to define the document & how its stored. If any example data was provided, this solution would go with explicit mapping and prevent unnecessary mapped fields.
+* This solution will go with the **dynamic mapping** option to define the document & how it's stored. If any example data was provided, this solution would go with explicit mapping and prevent unnecessary mapped fields.
 * **AWSElasticBlockStore** is used, by defining aws-ebs StorageClass, to benefit from the rescheduling behavior of network-attached PersistentVolumes.
-* A [SLM policy](https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-snapshots.html) will be defined to back up indices automatically by taking snapshots regularly. The snapshots will be stored in file system location as there is no S3 provided: (see [Failures](#-failures))
-* The **default JVM heap size** settings are used, as it's recommended, instead of overriding the heap size. But limited the resources by specifying memory and cpu on the manifest file.
+* An [SLM policy](https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-snapshots.html) will be defined to back up indices automatically by taking snapshots regularly. The snapshots will be stored in file system location as there is no S3 provided: (see [Failures](#-failures))
+* The **default JVM heap size** settings are used, as it's recommended, instead of overriding the heap size. But limited the resources by specifying memory and cpuCPU on the manifest file.
 * Update strategy will stay as [the default behavior](https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-update-strategy.html) as unlimited maxSurge and only **1 unavailable pod at one time**.
-* Default [PodDisruptionBudget](https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-pod-disruption-budget.html) configuration is used. It allows **one Elasticsearch Pod to be taken down**, as long as the cluster has a green health.
+* Default [PodDisruptionBudget](https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-pod-disruption-budget.html) configuration is used. It allows **one Elasticsearch Pod to be taken down**, as long as the cluster has green health.
 * [Node scheduling](https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-advanced-node-scheduling.html) will remain default as **Single Elasticsearch node per Kubernetes host**
-* Default [Readiness probe](https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-readiness.html) configuration is used. It will be sufficient as we don't expect heavy load.
+* Default [Readiness probe](https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-readiness.html) configuration is used. It will be sufficient as we don't expect a heavy load.
 * Default [PreStop hook](https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-prestop.html) configuration is used for pods. ECK will wait for an **additional 50 seconds** when the pod is terminated, to avoid the race condition.
 * Default [security context](https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-security-context.html) configuration is used and Elasticsearch **runs as root**.
 
@@ -248,14 +248,14 @@ Monitor the operator logs:
 kubectl -n elastic-system logs -f statefulset.apps/elastic-operator
 ```
 
-Create elasticsearch & kibana deployments v7.16.1 by building with kustomize and then deploy them.
+Create elasticsearch & kibana deployments v7.16.1 by building with kustomize. And then deploy them.
 
 ```bash
 kustomize build k8s -o k8s.yaml
 kubectl apply -f k8s.yaml
 ```
 
-Watch until the pods are ready and then check status of cluster. This may take a couple of minutes.
+Watch until the pods are ready and then check the status of the cluster. It may take a couple of minutes.
 
 ```bash
 watch kubectl get pods -n elastic-ha
@@ -265,7 +265,7 @@ kubectl get elasticsearch -n elastic-ha
 kubectl get kibana -n elastic-ha
 ```
 
-Get the external ip and port of elasticsearch loadbalancer:
+Get the external IP and port of elasticsearch load balancer:
 
 ```bash
 kubectl get svc -n elastic-ha | grep ha-es-http
@@ -309,7 +309,7 @@ You should get a response like this:
 
 I do love challenges.
 
-I have worked on many kinds of products, mostly on building **private cloud systems for defence industry** and developing on them. Those systems were highly available, scalable, fault-tolerant clusters with massive storage capacities.
+I have worked on many kinds of products, mostly on building **private cloud systems for the defense industry** and developing over them. Those systems were highly available, scalable, fault-tolerant clusters with massive storage capacities.
 
 
 <img align="right" src="https://media.giphy.com/media/SWoSkN6DxTszqIKEqv/giphy.gif" width='400'/>
@@ -322,10 +322,10 @@ In my work time, I do
 * 📊 Visualize data,
 * ☁️ Check out new technologies...
 
-Also I assure
+Also, I assure
 * ♻️ Maintainable code,
 * 🗃️ Documentation of failures and successes,
-* 🗣️ Attention to feedbacks.
+* 🗣️ Attention to feedback.
 
 I am taking a course right now *to be AWS-Certified* and enhance my toolkit with AWS services.
 
@@ -356,4 +356,4 @@ I am taking a course right now *to be AWS-Certified* and enhance my toolkit with
 ## 🍐 Failures
 
 * I have designed highly-available-elasticsearch to take automated snapshots. However, I couldn't manage to register a statically provisioned filesystem repo. So I couldn't add the CronJob or SLM Policy which are mentioned in [The Solution](#the-solution)
-* I was going to benchmark the solution using [Rally](https://github.com/elastic/rally). But that is something that I couldn't make it on time.
+* I was going to benchmark the solution using [Rally](https://github.com/elastic/rally). But that is something that I couldn't make on time.
