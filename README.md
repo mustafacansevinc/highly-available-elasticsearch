@@ -4,7 +4,7 @@
 
 [![Releases](https://img.shields.io/github/v/release/mustafacansevinc/highly-available-elasticsearch?style=for-the-badge)](https://github.com/mustafacansevinc/highly-available-elasticsearch/releases) [![Licence](https://img.shields.io/github/license/mustafacansevinc/highly-available-elasticsearch?style=for-the-badge)](./LICENSE) [![Total lines](https://img.shields.io/tokei/lines/github/mustafacansevinc/highly-available-elasticsearch?style=for-the-badge)](https://github.com/mustafacansevinc/highly-available-elasticsearch/) ![Reading time](https://img.shields.io/badge/reading%20time-30%20mins-ffef00?style=for-the-badge)
 
-[Features](#-features) | [Solution Architecture](#-solution-architecture) | [The Solution](#-the-solution) | [Quick Start](#-quick-start) | [Author](#%EF%B8%8F-author) | [Credits](#-credits) | [Failures](#-failures)
+[Features](#-features) | [Solution Architecture](#-solution-architecture) | [The Solution](#-the-solution) | [Quick Start](#-quick-start) | [Author](https://github.com/mustafacansevinc) | [Credits](./CREDITS.md) | [Failures](#-failures) | [Presentation](./PRESENTATION.pdf)
 
 ![kubernetes](https://img.shields.io/badge/kubernetes-326ce5.svg?&style=for-the-badge&logo=kubernetes&logoColor=white) ![elasticsearch](https://img.shields.io/badge/ElasticSearch-0779A1?style=for-the-badge&logo=elasticsearch&logoColor=white) ![kibana](https://img.shields.io/badge/Kibana-EF5098?style=for-the-badge&logo=Kibana&logoColor=white) ![aws](https://img.shields.io/badge/AWS-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white) ![markdown](https://img.shields.io/badge/Markdown-000000?style=for-the-badge&logo=markdown&logoColor=white)
 
@@ -299,59 +299,6 @@ You should get a response like this:
 
 ![kibana-curl](./assets/kibana-curl.png)
 
-## 🙋‍♂️ Author
-
-<samp><strong>Mustafa Can Sevinç #Enthusiastic #Diligent #DevOps #Cloud #Engineer</strong></samp>
-
-[![github](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/mustafacansevinc) [![linkedin](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/mcansevinc/) [![gmail](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:mcansevinc@gmail.com) [![cansevinc](https://img.shields.io/badge/website-667881?style=for-the-badge&logo=About.me&logoColor=white)](http://cansevinc.com.tr/)
-
-> *"A smooth sea never made a skilled sailor."*
-
-I do love challenges.
-
-I have worked on many kinds of products, mostly on building **private cloud systems for the defense industry** and developing over them. Those systems were highly available, scalable, fault-tolerant clusters with massive storage capacities.
-
-
-<img align="right" src="https://media.giphy.com/media/SWoSkN6DxTszqIKEqv/giphy.gif" width='400'/>
-
-In my work time, I do
-
-* ⚙️ Automate things,
-* 🧩 Provision servers & services,
-* 🐋 Modernize applications,
-* 📊 Visualize data,
-* ☁️ Check out new technologies...
-
-Also, I assure
-* ♻️ Maintainable code,
-* 🗃️ Documentation of failures and successes,
-* 🗣️ Attention to feedback.
-
-I am taking a course right now *to be AWS-Certified* and enhance my toolkit with AWS services.
-
-## 📚 Credits
-
-* https://tom.preston-werner.com/2010/08/23/readme-driven-development.html
-* https://github.com/alexandresanlim/Badges4-README.md-Profile
-* https://www.elastic.co/guide/en/cloud-on-k8s/1.9/k8s-volume-claim-templates.html
-* https://www.ashnik.com/how-to-configure-highly-available-elasticsearch/
-* https://dzone.com/articles/apache-lucene-a-high-performance-and-full-featured
-* https://www.cncf.io/blog/2021/03/25/how-to-build-an-elastic-search-cluster-for-production/
-* https://www.elastic.co/blog/how-many-shards-should-i-have-in-my-elasticsearch-cluster
-* https://www.elastic.co/guide/en/cloud/current/ec-custom-repository.html
-* https://www.elastic.co/guide/en/elasticsearch/reference/current/snapshot-lifecycle-management-api.html
-* https://www.elastic.co/guide/en/elasticsearch/reference/7.16/monitoring-overview.html
-* https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-persistent-storage.html
-* https://portworx.com/wp-content/uploads/2020/02/Experts-Guide-Running-Elastic-on-Kubernetes-Portworx.pdf
-* https://opster.com/blogs/elasticsearch-best-practices-3000-cluster-analysis/
-* https://medium.com/99dotco/a-detail-guide-to-deploying-elasticsearch-on-elastic-cloud-on-kubernetes-eck-31808ac60466
-* https://portworx.com/blog/how-to-backup-and-restore-elasticsearch-on-kubernetes/
-* https://joshua-robinson.medium.com/a-guide-to-elasticsearch-snapshots-565017630638
-* https://learnk8s.io/production-best-practices
-* https://kubernetes.io/docs/concepts/storage/storage-classes
-* https://cloud.google.com/blog/products/containers-kubernetes/kubernetes-best-practices-resource-requests-and-limits
-* https://www.youtube.com/watch?v=Wf6E3vkvEFM
-* https://app.terrastruct.com/
 
 ## 🍐 Failures
 
